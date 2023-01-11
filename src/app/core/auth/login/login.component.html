@@ -1,0 +1,32 @@
+<main class="form-signin " >
+    <div class="main-container" style="background-color: rgba(148, 0, 211, 0.226);">
+  
+      <form class="mat-elevation-z8 form-container" (ngSubmit)="onClick()" [formGroup]="userReactive" style="background-color: rgba(166, 244, 244, 0.452);"> 
+            <h3 style="text-align: center; font-size: xx-large; font-family: Georgia, 'Times New Roman', Times, serif;">Sign In</h3>
+        <div class="row-form-container ">
+          <mat-form-field appearance="fill" class="input-form">
+            <mat-label>Username</mat-label>
+            <input matInput name="username" type="text" formControlName="username" placeholder="Inserire Username">
+            <mat-error *ngIf="userReactive.get('username')?.hasError('required')">Username obbligatorio</mat-error>
+            <mat-error *ngIf="userReactive.get('username')?.hasError('minlength')">Il campo Username deve avere almeno 3
+              caratteri</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row-form-container ">
+          <mat-form-field appearance="fill" class="input-form">
+            <mat-label>Password</mat-label>
+            <input matInput name="password" type="password" formControlName="password" placeholder="Inserire la password">
+            <mat-error *ngIf="userReactive.get('password')?.hasError('required')">Password obbligatoria</mat-error>
+            <mat-error *ngIf="userReactive.get('password')?.hasError('minlength')">Il campo Password deve avere almeno 3
+              caratteri</mat-error>
+          </mat-form-field>
+        </div>
+  
+        <div style="display:flex; justify-content:center;">
+          <button type="submit" [disabled]="userReactive.invalid" mat-raised-button color="primary">Sign in</button>
+        </div>
+  
+      </form>
+  
+    </div>
+  </main>

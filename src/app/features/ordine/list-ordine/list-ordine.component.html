@@ -1,0 +1,129 @@
+<div style="padding: 20px;" *ngIf="urlSearchOperationFlag != 'false'">
+    <button mat-icon-button color="primary" (click)="onClickAddNew()"
+        *ifRole="['PIZZAIOLO_ROLE']"><mat-icon>add</mat-icon></button>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef> Data </th>
+            <td mat-cell *matCellDef="let element"> {{element.data | date:"yyyy-MM-dd"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="codice">
+            <th mat-header-cell *matHeaderCellDef> Codice </th>
+            <td mat-cell *matCellDef="let element"> {{element.codice | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="costoTotale">
+            <th mat-header-cell *matHeaderCellDef> COSTO TOTALE </th>
+            <td mat-cell *matCellDef="let element"> {{element.costoTotale}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="closed">
+            <th mat-header-cell *matHeaderCellDef> CHIUSO </th>
+            <td mat-cell *matCellDef="let element"> {{element.closed?'SI':'NO'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="azioni">
+            <th mat-header-cell *matHeaderCellDef> AZIONI </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-icon-button color="primary" aria-label="Example icon button with a home icon"
+                    *ifRole="['PIZZAIOLO_ROLE']" (click)="showDetail(element.id)">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+                <button mat-icon-button style="color:yellow;" aria-label="Example icon button with a home icon"
+                    *ifRole="['PIZZAIOLO_ROLE']" (click)="onClickUpdate(element.id)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" aria-label="Example icon button with a home icon"
+                    *ifRole="['PIZZAIOLO_ROLE']" (click)="onClickDelete(element.id)">
+                    <mat-icon>toggle_on</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" aria-label="Example icon button with a home icon"
+                    *ifRole="['FATTORINO_ROLE']" (click)="onClickDelete(element.id)">
+                    <mat-icon>toggle_on</mat-icon>
+                </button>
+
+            </td>
+
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+        aria-label="Select page of users"></mat-paginator>
+    <div *ifRole="['PIZZAIOLO_ROLE']">
+        <button mat-raised-button color="accent" type="submit" class="button" (click)="resetDataSource()"
+            *ngIf="urlSearchOperationFlag=='true'">Back</button>
+    </div>
+
+    <div *ifRole="['PROPRIETARIO_ROLE']">
+        <button mat-raised-button color="accent" type="submit" class="button" routerLink="/welcome"
+            *ngIf="urlSearchOperationFlag=='true'">Back</button>
+    </div>
+
+</div>
+
+
+
+<div *ngIf="urlSearchOperationFlag == 'false'">
+
+    <div *ifRole="['PROPRIETARIO_ROLE']">
+        <button mat-raised-button color="accent" type="submit" class="button" routerLink="/welcome">Back</button>
+    </div>
+
+    <div style=" font-weight: bolder;" align="center">
+        Clienti 'Virtuosi' nell'intervallo selezionato:
+    </div>
+
+    <table mat-table [dataSource]="clientiDataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nome">
+            <th mat-header-cell *matHeaderCellDef> NOME </th>
+            <td mat-cell *matCellDef="let element"> {{element.nome | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cognome">
+            <th mat-header-cell *matHeaderCellDef> COGNOME </th>
+            <td mat-cell *matCellDef="let element"> {{element.cognome | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="indirizzo">
+            <th mat-header-cell *matHeaderCellDef> INDIRIZZO </th>
+            <td mat-cell *matCellDef="let element"> {{element.indirizzo | uppercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="attivo">
+            <th mat-header-cell *matHeaderCellDef> ATTIVO </th>
+            <td mat-cell *matCellDef="let element"> {{element.attivo?'SI':'NO'}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedClientiColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedClientiColumns;"></tr>
+
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+        aria-label="Select page of users"></mat-paginator>
+
+    <div class="stats">
+        Ricavi totali nell’intervallo selezionato: {{ricavi}} <br>
+    </div>
+    <div class="stats">
+        Numero ordini totali nell’intervallo selezionato: {{ordini}} <br>
+    </div>
+    <div class="stats">
+        Numero pizze totali ordinate nell’intervallo selezionato: {{pizze}}
+    </div>
+
+</div>

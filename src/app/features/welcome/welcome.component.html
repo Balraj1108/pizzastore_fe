@@ -1,0 +1,27 @@
+<div class="contenitore">
+    <mat-card class="main-card" style="padding: 100px; background-color: rgba(10, 128, 69, 0.401);">
+      <mat-card-header>
+        <mat-card-title >Benvenuto su Pizza Store!</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          Using a series of utilities, you can create this jumbotron, just like the one
+          in previous versions of Bootstrap.
+        </p>
+      </mat-card-content>
+      <mat-card-actions *ifRole="['ADMIN_ROLE']">
+        <button mat-raised-button color="primary" routerLink="/cliente/list">Vai a Lista Clienti</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="contenitore" *ifRole="['PIZZAIOLO_ROLE']">
+    <app-ui-card [cardBody]="'body card Gestione Pizze'" [cardLink]="'/pizza/list'" [cardTitle]="'Gestione Pizze'"></app-ui-card>
+    <app-ui-card [cardBody]="'body card Nuovo Ordine'" [cardLink]="'/ordine/create'" [cardTitle]="'Inserisci Nuovo Ordine'"></app-ui-card>
+    <app-ui-card [cardBody]="'body card Gestione Ordini'" [cardLink]="'/ordine/list'" [cardTitle]="'Gestione Ordini'"></app-ui-card>
+  </div>
+
+  <div class="contenitore" *ifRole="['PROPRIETARIO_ROLE']">
+    <app-ui-card [cardBody]="'body card Report Ordini'" [cardLink]="'/ordine/report'" [cardTitle]="'Report Ordini'"></app-ui-card>
+    <app-ui-card [cardBody]="'body card Statistiche Varie'" [cardLink]="'/ordine/statistiche'" [cardTitle]="'Statistiche Varie'"></app-ui-card>
+  </div>
